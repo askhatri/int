@@ -1,0 +1,18 @@
+You need to build an e-commerce application using Generative Al solutions (ChatGPT, Google Bard, Amazon CodeWhisperer or Sourcegraph Cody).
+
+The application needs to have following core functionalities. 
+Registration Module.
+Login through username and password with authentication using an OTP.
+Change Password.
+Forgot Password. 
+Product Catalog with amount, images, description.
+Add to Cart.
+Checkout and Payment Module.
+
+Instructions
+
+You can add any other functionalities as per your creativity in addition to above listed core functionalities.
+You can use any programming language and tech stack of your choice and your area of expertise.
+You must leverage GenAl solutions to the maximum for building this application.
+You must check that the code you are writing is of highest quality, follows coding practices and does not have security issues.
+This project is to test your ability to use Generative Al capabilities to build this application end to end and prepare you to be ready to deliver on customer projects.

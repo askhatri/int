@@ -1,0 +1,8 @@
+Build an e-commerce application using java, springboot and mysql database that needs to have following core functionalities. 
+1) Registration Module.
+2) Login through username and password with authentication using an OTP.
+3) Change Password.
+4) Forgot Password. 
+5) Product Catalog with amount, images, description.
+6) Add to Cart.
+7) Checkout and Payment Module.
