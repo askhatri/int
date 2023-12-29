@@ -15,6 +15,10 @@ public class OrderItem {
     @JoinColumn(name = "order_id")
     private OrderDetails order;
 
+    public OrderItem(Product product) {
+        this.product = product;
+    }
+
     @ManyToOne
     @JoinColumn(name = "product_id")
     private Product product;
