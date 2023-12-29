@@ -6,3 +6,7 @@ Build an e-commerce application using java, springboot and mysql database that n
 5) Product Catalog with amount, images, description.
 6) Add to Cart.
 7) Checkout and Payment Module.
+
+MySQL database installed with username: root
+Password: password1
+
