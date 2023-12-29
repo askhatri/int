@@ -8,7 +8,7 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-public class Order {
+public class OrderDetails {
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private final List<OrderItem> items = new ArrayList<>();
