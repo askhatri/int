@@ -3,6 +3,7 @@ package com.ps.ecommerce.controllers;
 import com.ps.ecommerce.entities.User;
 import com.ps.ecommerce.misc.*;
 import com.ps.ecommerce.repositories.UserRepository;
+import com.ps.ecommerce.services.OtpService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

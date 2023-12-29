@@ -1,4 +1,4 @@
-package com.ps.ecommerce.misc;
+package com.ps.ecommerce.services;
 
 import org.springframework.stereotype.Service;
 
