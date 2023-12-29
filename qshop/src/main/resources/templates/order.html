@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8"/>
+    <title>q shop</title>
+    <link rel="stylesheet" th:href="@{../static/css/stylesheet.css}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container">
+    <div th:replace="~{navigation :: navigation(Cart)}"/>
+
+    <h1>Cart</h1>
+    <span th:text="'Order #' + ${order.getId()}"/>
+    <table class="table table-hover">
+        <thead class="thead-dark">
+        <tr>
+            <th>Product</th>
+            <th>Quantity</th>
+            <th>Price</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="orderItems : ${orderItems}">
+            <td th:text="${orderItems.product.title}">
+            <td th:text="${orderItems.quantity}">
+            <td th:text="${orderItems.price}">
+        </tr>
+        </tbody>
+    </table>
+    <span th:text="'Total price: ' + ${order.price}"/>
+    <br>
+    <a th:href="@{/profile}" class="btn btn-warning">back</a>
+</body>
+</html>
