@@ -1,7 +1,10 @@
 package com.ps.ecommerce.controllers;
 
 import com.ps.ecommerce.entities.User;
-import com.ps.ecommerce.misc.*;
+import com.ps.ecommerce.misc.AuthenticationManager;
+import com.ps.ecommerce.misc.AuthenticationResponse;
+import com.ps.ecommerce.misc.LoginRequest;
+import com.ps.ecommerce.misc.UsernamePasswordAuthenticationToken;
 import com.ps.ecommerce.repositories.UserRepository;
 import com.ps.ecommerce.services.OtpService;
 import org.springframework.beans.factory.annotation.Autowired;

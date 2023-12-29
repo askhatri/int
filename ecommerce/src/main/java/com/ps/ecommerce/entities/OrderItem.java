@@ -14,18 +14,15 @@ public class OrderItem {
     @ManyToOne
     @JoinColumn(name = "order_id")
     private OrderDetails order;
+    @ManyToOne
+    @JoinColumn(name = "product_id")
+    private Product product;
+    private int quantity;
+    private BigDecimal price;
 
     public OrderItem(Product product) {
         this.product = product;
     }
-
-    @ManyToOne
-    @JoinColumn(name = "product_id")
-    private Product product;
-
-    private int quantity;
-
-    private BigDecimal price;
 
     public Long getId() {
         return id;

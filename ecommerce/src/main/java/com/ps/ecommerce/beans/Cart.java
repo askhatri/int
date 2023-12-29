@@ -20,31 +20,31 @@ public class Cart {
     private BigDecimal price;
 
     @PostConstruct
-    public void init(){
+    public void init() {
         items = new ArrayList<>();
     }
 
-    public void clearCart(){
+    public void clearCart() {
         items.clear();
         recalculateTotalPrice();
     }
 
-    public void addToCart(Product product){
-        for (OrderItem i: items){
-            if(i.getProduct().getId() == product.getId()){
+    public void addToCart(Product product) {
+        for (OrderItem i : items) {
+            if (i.getProduct().getId() == product.getId()) {
                 i.setQuantity(i.getQuantity() + 1);
                 i.setPrice(i.getPrice().multiply(new BigDecimal(i.getQuantity())));
                 recalculateTotalPrice();
                 return;
             }
         }
-        items. add(new OrderItem(product));
+        items.add(new OrderItem(product));
         recalculateTotalPrice();
     }
 
-    public void removeFromCartById(int productId){
+    public void removeFromCartById(int productId) {
         for (int i = 0; i < items.size(); i++) {
-            if(items.get(i).getId() == productId){
+            if (items.get(i).getId() == productId) {
                 items.remove(i);
                 recalculateTotalPrice();
                 return;
@@ -52,9 +52,9 @@ public class Cart {
         }
     }
 
-    public void recalculateTotalPrice(){
+    public void recalculateTotalPrice() {
         this.price = new BigDecimal(0);
-        for (OrderItem i: items) {
+        for (OrderItem i : items) {
             price.add(i.getPrice());
         }
     }
