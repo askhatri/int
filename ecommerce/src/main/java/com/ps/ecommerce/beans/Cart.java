@@ -3,6 +3,8 @@ package com.ps.ecommerce.beans;
 import com.ps.ecommerce.entities.OrderItem;
 import com.ps.ecommerce.entities.Product;
 import jakarta.annotation.PostConstruct;
+import jakarta.persistence.ElementCollection;
+import jakarta.persistence.Embeddable;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
@@ -13,9 +15,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
+@Embeddable
 @Scope(value = WebApplicationContext.SCOPE_SESSION, proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class Cart {
 
+    @ElementCollection
     private List<OrderItem> items;
     private BigDecimal price;
 

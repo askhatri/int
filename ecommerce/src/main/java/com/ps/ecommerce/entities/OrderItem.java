@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import java.math.BigDecimal;
 
 @Entity
+@Embeddable
 public class OrderItem {
 
     @Id
