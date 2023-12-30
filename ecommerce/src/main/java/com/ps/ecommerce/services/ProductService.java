@@ -85,4 +85,8 @@ public class ProductService {
         }
         return PageRequest.of(pageIndex, pageSize, Sort.by(sortDirection, sortType));
     }
+
+    public StringBuilder getRequestDefinition() {
+        return new StringBuilder();
+    }
 }

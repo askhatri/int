@@ -1,5 +1,6 @@
 package com.ps.ecommerce.entities;
 
+import com.ps.ecommerce.beans.Cart;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
@@ -12,6 +13,7 @@ public class OrderDetails {
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private final List<OrderItem> items = new ArrayList<>();
+    private Cart cart;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -23,6 +25,11 @@ public class OrderDetails {
     private Date orderDate;
 
     private OrderStatus status;
+
+    public OrderDetails(User user, Cart cart) {
+        this.user = user;
+        this.cart = cart;
+    }
 
     public Long getId() {
         return id;
@@ -66,5 +73,13 @@ public class OrderDetails {
 
     public void setStatus(OrderStatus status) {
         this.status = status;
+    }
+
+    public Cart getCart() {
+        return cart;
+    }
+
+    public void setCart(Cart cart) {
+        this.cart = cart;
     }
 }
