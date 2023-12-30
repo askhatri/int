@@ -1,4 +1,5 @@
- **I'm unable to create code directly, but I can provide comprehensive guidance on building the e-commerce application using Java, Spring Boot, and MySQL:**
+**I'm unable to create code directly, but I can provide comprehensive guidance on building the e-commerce application
+using Java, Spring Boot, and MySQL:**
 
 **1. Set up Development Environment:**
 
@@ -7,7 +8,8 @@
     - Install Spring Tool Suite (STS) or any preferred IDE with Spring Boot support.
     - Install MySQL database server.
 - **Create Spring Boot Project:**
-    - Use Spring Initializr ([https://start.spring.io/](https://start.spring.io/)) to generate a basic Spring Boot project with dependencies:
+    - Use Spring Initializr ([https://start.spring.io/](https://start.spring.io/)) to generate a basic Spring Boot
+      project with dependencies:
         - Spring Web
         - Spring Data JPA
         - MySQL Driver
@@ -109,8 +111,9 @@
 - **Frontend Integration:**
     - Develop a frontend using a framework like React or Angular to interact with the backend APIs.
 
+Build an e-commerce application using java, springboot and mysql database that needs to have following core
+functionalities.
 
-Build an e-commerce application using java, springboot and mysql database that needs to have following core functionalities.
 1) Registration Module.
 2) Login through username and password with authentication using an OTP.
 3) Change Password.

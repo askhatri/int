@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <title>ecommerce</title>
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 </head>
@@ -14,14 +14,16 @@
     <div th:replace="~{navigation :: navigation(Main)}"/>
     <h1>ecommerce</h1>
     <h3>Simple filter</h3>
-    <form th:action="@{/}" method="get">
+    <form method="get" th:action="@{/}">
         <div class="input-group">
-            <input class="form-control" name="min_price" th:value="${param.min_price}" type="number" step="0.01" placeholder="Minimal price"/>
-            <input class="form-control" name = "max_price" th:value="${param.max_price}" type="number" step="0.01" placeholder="Maximal price"/>
+            <input class="form-control" name="min_price" placeholder="Minimal price" step="0.01" th:value="${param.min_price}"
+                   type="number"/>
+            <input class="form-control" name="max_price" placeholder="Maximal price" step="0.01" th:value="${param.max_price}"
+                   type="number"/>
         </div>
         <br>
         Page size:
-        <select name="page_size" >
+        <select name="page_size">
             <option th:value="null">---</option>
             <option>10</option>
             <option>5</option>
@@ -35,10 +37,10 @@
             <option>price</option>
             <option>title</option>
         </select>
-        <input th:type="checkbox" name="sort_direction" value="DESC">DESC
+        <input name="sort_direction" th:type="checkbox" value="DESC">DESC
 
         <button class="btn btn-warning" type="submit">Filter</button>
-        <a th:href="@{/}" class="btn btn-warning">Reset filter</a>
+        <a class="btn btn-warning" th:href="@{/}">Reset filter</a>
     </form>
     <h3>Simple catalog</h3>
     <table class="table table-hover">
@@ -60,7 +62,7 @@
             </td>
             <td th:text="${product.price}"></td>
             <td>
-                <a th:href="@{'/cart/add/' + ${product.id}}" class="btn btn-primary">Add to cart</a>
+                <a class="btn btn-primary" th:href="@{'/cart/add/' + ${product.id}}">Add to cart</a>
             </td>
         </tr>
         </tbody>
@@ -72,7 +74,7 @@
             </li>
             <li class="page-item" th:classappend="${page.getNumber() + 1 == i ? 'active' : ''}"
                 th:each="i : ${#numbers.sequence(1, page.getTotalPages())}">
-                <a th:class="page-link" th:text="${i}" th:href="@{'/?p=' + ${i - 1} + ${requestDefinition}}"></a>
+                <a th:class="page-link" th:href="@{'/?p=' + ${i - 1} + ${requestDefinition}}" th:text="${i}"></a>
             </li>
             <li class="page-item" th:classappend="${(page.getNumber() >= page.getTotalPages() - 1) ? 'disabled' : ''}">
                 <a th:class="page-link" th:href="@{'/?p=' + ${page.getNumber() + 2} + ${requestDefinition}}"> >> </a>
