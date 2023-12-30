@@ -3,7 +3,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <title>Login Page</title>
+    <title>Registration Page</title>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
 
@@ -11,20 +11,10 @@
 </head>
 
 <body>
-Login Page
+Registration Page
 <hr>
-<form method="POST" th:action="@{/authenticateUser}">
+<form method="POST" th:action="@{/register}">
 
-    <div th:if="${param.error} != null">
-        <div>
-            Invalid username and password
-        </div>
-    </div>
-    <div th:if="${param.logout} != null">
-        <div>
-            You have been logged out
-        </div>
-    </div>
     <table>
         <tr>
             <td>
@@ -47,12 +37,10 @@ Login Page
                 submit:
             </td>
             <td>
-                <button type="submit">Login</button>
+                <button type="submit">Register</button>
             </td>
         </tr>
     </table>
 </form>
-<hr>
-<a href="register">Register new user.</a>
 </body>
 </html>

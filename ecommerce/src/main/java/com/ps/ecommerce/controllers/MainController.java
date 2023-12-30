@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.IOException;
@@ -23,6 +24,8 @@ import java.util.Map;
 
 @Controller
 public class MainController {
+    private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(MainController.class);
+
     private final ProductService productService;
     private final CategoryService categoryService;
     private final UserService userService;
@@ -46,12 +49,26 @@ public class MainController {
         StringBuilder requestDefinition = productService.getRequestDefinition();
         model.addAttribute("page", page);
         model.addAttribute("requestDefinition", requestDefinition);
+        logger.info("On index Page");
         return "index";
     }
 
     @GetMapping("/login")
     public String login() {
-        return "login";
+        logger.info("On login_success Page");
+        return "login_success";
+    }
+
+    @GetMapping("/register")
+    public String register() {
+        logger.info("On register GetMapping Page");
+        return "register";
+    }
+
+    @PostMapping("/register")
+    public String registerPost() {
+        logger.info("On register PostMapping Page");
+        return "register_success";
     }
 
     @GetMapping("/profile")
@@ -63,6 +80,7 @@ public class MainController {
         List<OrderDetails> orders = orderService.findByUser(user);
         model.addAttribute("user", user);
         model.addAttribute("orders", orders);
+        logger.info("On profile GetMapping Page");
         return "profile";
     }
 
@@ -72,6 +90,7 @@ public class MainController {
         List<OrderItem> orderItems = orderItemService.findByOrder(order);
         model.addAttribute("order", order);
         model.addAttribute("orderItems", orderItems);
+        logger.info("On order GetMapping Page");
         return "order";
     }
 
