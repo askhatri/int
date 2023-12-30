@@ -8,6 +8,7 @@ import com.ps.ecommerce.entities.User;
 import com.ps.ecommerce.services.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -69,6 +70,22 @@ public class MainController {
     public String registerPost() {
         logger.info("On register PostMapping Page");
         return "register_success";
+    }
+
+    @GetMapping("/home")
+    public String home(Model model, Principal principal) {
+        if (principal == null) {
+            return "redirect:/";
+        }
+        logger.info("On home Page");
+        return "home";
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest request, HttpSession session) {
+        session.invalidate();
+        logger.info("On logout Page");
+        return "index";
     }
 
     @GetMapping("/profile")
