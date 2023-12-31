@@ -17,7 +17,7 @@ Login Page
 
     <div th:if="${param.error} != null">
         <div>
-            Invalid username and password
+            Invalid phone and password
         </div>
     </div>
     <div th:if="${param.logout} != null">
@@ -28,10 +28,10 @@ Login Page
     <table>
         <tr>
             <td>
-                Username:
+                Phone:
             </td>
             <td>
-                <input name="phone" placeholder="phone" type="text">
+                <input name="phone" placeholder="phone" type="text" value="9988776655">
             </td>
         </tr>
         <tr>
@@ -39,12 +39,12 @@ Login Page
                 Password:
             </td>
             <td>
-                <input name="password" placeholder="password" type="password">
+                <input name="password" placeholder="password" type="password" value="9988776655">
             </td>
         </tr>
         <tr>
             <td>
-                submit:
+                Submit
             </td>
             <td>
                 <button type="submit">Login</button>

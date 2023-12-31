@@ -67,7 +67,20 @@ public class MainController {
     }
 
     @PostMapping("/register")
-    public String registerPost() {
+    public String registerPost(Model model, Principal principal) {
+        String phone = model.getAttribute("phone").toString();
+        logger.info("On register phone: " + phone);
+        User user = userService.getUserByPhone(phone);
+        if(user != null) {
+            logger.info("On register user already exists.");
+            model.addAttribute("error", "User already exists.");
+            return "register";
+        }
+        String password = model.getAttribute("password").toString();
+        user = new User();
+        user.setPassword(password);
+        user.setPhone(phone);
+        userService.saveUser(user);
         logger.info("On register PostMapping Page");
         return "register_success";
     }

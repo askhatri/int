@@ -52,4 +52,8 @@ public class UserService implements UserDetailsService {
 //        mappedAuthorities.add(new SimpleGrantedAuthority("ROLE_MANAGER"));
         return mappedAuthorities;
     }
+
+    public void saveUser(User user) {
+        userRepository.save(user);
+    }
 }
