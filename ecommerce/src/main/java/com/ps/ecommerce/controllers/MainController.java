@@ -8,13 +8,19 @@ import com.ps.ecommerce.entities.User;
 import com.ps.ecommerce.services.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
 import java.security.Principal;
@@ -31,6 +37,8 @@ public class MainController {
     private final OrderService orderService;
     private final OrderItemService orderItemService;
     private final Cart cart;
+    @Autowired
+    private AuthenticationManager authenticationManager; // Spring Security's authentication manager
 
     @Autowired
     public MainController(ProductService productService, CategoryService categoryService, UserService userService, OrderService orderService, OrderItemService orderItemService, Cart cart) {
@@ -42,20 +50,36 @@ public class MainController {
         this.cart = cart;
     }
 
-    @GetMapping("/")
-    public String index(Model model, @RequestParam Map<String, String> param) {
+    @GetMapping("/afsdasf")
+    public String afasfd(Model model, @RequestParam Map<String, String> param) {
         Page<Product> page = productService.findAll(param);
         StringBuilder requestDefinition = productService.getRequestDefinition();
         model.addAttribute("page", page);
         model.addAttribute("requestDefinition", requestDefinition);
-        logger.info("On index Page");
+        return "afsdfa";
+    }
+
+    @GetMapping("/")
+    public String showLoginForm(Model model) {
+        logger.info("On showLoginForm Page");
+        model.addAttribute("user", new User());
         return "index";
     }
 
-    @GetMapping("/login")
-    public String login() {
-        logger.info("On login_success Page");
-        return "login_success";
+    @PostMapping("/login")
+    public String loginUser(@ModelAttribute("user") User user, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+        if (bindingResult.hasErrors()) {
+            return "index";
+        }
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(user.getPhone(), user.getPassword());
+        try {
+            Authentication authentication = authenticationManager.authenticate(authenticationToken);
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            return "home";
+        } catch (AuthenticationException e) {
+            bindingResult.rejectValue("password", "error.incorrectCredentials", "Invalid phone or password");
+            return "index";
+        }
     }
 
     @PostMapping("/register")
@@ -91,9 +115,11 @@ public class MainController {
     }
 
     @GetMapping("/logout")
-    public String logout(HttpServletRequest request, HttpSession session) {
-        session.invalidate();
-        logger.info("On logout Page");
+    public String logout(HttpServletRequest request, HttpServletResponse response) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null) {
+            new SecurityContextLogoutHandler().logout(request, response, auth);
+        }
         return "index";
     }
 
