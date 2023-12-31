@@ -12,6 +12,7 @@ public class User {
     private Long id;
     private String phone;
     private String password;
+    private String otp;
 
     public User() {
     }
@@ -25,6 +26,13 @@ public class User {
         this.id = id;
         this.phone = phone;
         this.password = password;
+    }
+
+    public User(Long id, String phone, String password, String otp) {
+        this.id = id;
+        this.phone = phone;
+        this.password = password;
+        this.otp = otp;
     }
 
     public Long getId() {
@@ -49,5 +57,13 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getOtp() {
+        return otp;
+    }
+
+    public void setOtp(String otp) {
+        this.otp = otp;
     }
 }
