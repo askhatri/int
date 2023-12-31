@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Registration</title>
+    <meta charset="UTF-8">
+</head>
+<body>
+<h1>Register</h1>
+
+<form method="post" th:action="@{/register_page2}" th:object="${user}">
+    <div>
+        <label for="phone">Phone:</label>
+        <input id="phone" name="phone" readonly th:field="*{phone}" type="text">
+    </div>
+
+    <div>
+        <label for="password">Password:</label>
+        <input id="password" name="password" readonly th:field="*{password}" type="password">
+    </div>
+
+    <div>
+        <label for="otp">OTP:</label>
+        <input id="otp" name="otp" required th:field="*{otp}" type="text">
+        <span th:errors="*{otp}" th:if="${#fields.hasErrors('otp')}"></span>
+    </div>
+
+    <button type="submit">Register</button>
+</form>
+</body>
+</html>

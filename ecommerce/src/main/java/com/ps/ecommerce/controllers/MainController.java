@@ -36,17 +36,21 @@ public class MainController {
     private final UserService userService;
     private final OrderService orderService;
     private final OrderItemService orderItemService;
+    private final OtpService otpService;
     private final Cart cart;
-    @Autowired
-    private AuthenticationManager authenticationManager; // Spring Security's authentication manager
+
+    private AuthenticationManager authenticationManager;
 
     @Autowired
-    public MainController(ProductService productService, CategoryService categoryService, UserService userService, OrderService orderService, OrderItemService orderItemService, Cart cart) {
+    public MainController(ProductService productService, CategoryService categoryService, UserService userService, OrderService orderService, OrderItemService orderItemService, Cart cart,
+                          OtpService otpService, AuthenticationManager authenticationManager) {
         this.productService = productService;
         this.categoryService = categoryService;
         this.userService = userService;
         this.orderService = orderService;
         this.orderItemService = orderItemService;
+        this.otpService = otpService;
+        this.authenticationManager = authenticationManager;
         this.cart = cart;
     }
 
@@ -85,14 +89,33 @@ public class MainController {
     @PostMapping("/register")
     public String registerUser(@ModelAttribute("user") User user, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return "register";
+            return "register_page1";
         }
         if (userService.getUserByPhone(user.getPhone()) != null) {
             bindingResult.rejectValue("phone", "error.userExists", "User with this phone already exists");
-            return "register";
+            return "register_page1";
         }
-        userService.createUser(user);
-        return "register_success";
+        String generatedOtp = otpService.generateOtp(user.getPhone());
+        logger.info("Generated OTP: " + generatedOtp);
+        user.setOtp(generatedOtp);
+        userService.saveUser(user);
+        return "register_page2";
+    }
+
+    @PostMapping("/register_page2")
+    public String registerPage2(@ModelAttribute("user") User user, BindingResult bindingResult) {
+        User exisitingUser = userService.getUserByPhone(user.getPhone());
+        if (exisitingUser == null) {
+            bindingResult.rejectValue("phone", "error.userExists", "User with this phone does not exist");
+            return "register_page2";
+        }
+        if (!exisitingUser.getOtp().equalsIgnoreCase(user.getOtp())) {
+            bindingResult.rejectValue("otp", "error.userExists", "OTP does not match");
+            return "register_page2";
+        }
+        user.setActive(true);
+        userService.saveUser(user);
+        return "register_page3";
     }
 
     @GetMapping("/register")

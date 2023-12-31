@@ -14,6 +14,8 @@ public class User {
     private String password;
     private String otp;
 
+    private boolean active = false;
+
     public User() {
     }
 
@@ -22,22 +24,12 @@ public class User {
         this.password = password;
     }
 
-    public User(Long id, String phone) {
-        this.id = id;
-        this.phone = phone;
-    }
-
-    public User(Long id, String phone, String password) {
-        this.id = id;
-        this.phone = phone;
-        this.password = password;
-    }
-
-    public User(Long id, String phone, String password, String otp) {
+    public User(Long id, String phone, String password, String otp, boolean active) {
         this.id = id;
         this.phone = phone;
         this.password = password;
         this.otp = otp;
+        this.active = active;
     }
 
     public Long getId() {
@@ -70,5 +62,13 @@ public class User {
 
     public void setOtp(String otp) {
         this.otp = otp;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 }
