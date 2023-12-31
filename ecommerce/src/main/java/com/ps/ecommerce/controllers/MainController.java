@@ -93,7 +93,7 @@ public class MainController {
         if (principal == null) {
             return "redirect:/";
         }
-        User user = userService.getUserByUsername(principal.getName());
+        User user = userService.getUserByPhone(principal.getName());
         List<OrderDetails> orders = orderService.findByUser(user);
         model.addAttribute("user", user);
         model.addAttribute("orders", orders);
@@ -126,7 +126,7 @@ public class MainController {
 
     @GetMapping("/orders/checkout")
     public String checkoutOrderDetails(Principal principal) {
-        User user = userService.getUserByUsername(principal.getName());
+        User user = userService.getUserByPhone(principal.getName());
         OrderDetails order = new OrderDetails(user, cart);
         orderService.save(order);
         return "redirect:/";

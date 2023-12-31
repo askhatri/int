@@ -16,15 +16,15 @@ public class OtpService {
     private final Random random = new Random();
     private final Map<String, OtpDetails> otpMap = new HashMap<>(); // Stores OTPs with expiry
 
-    public String generateOtp(String username) {
+    public String generateOtp(String phone) {
         String otp = generateRandomNumberString(OTP_LENGTH);
-        otpMap.put(username, new OtpDetails(otp, LocalDateTime.now().plusMinutes(OTP_EXPIRY_TIME_MINUTES)));
+        otpMap.put(phone, new OtpDetails(otp, LocalDateTime.now().plusMinutes(OTP_EXPIRY_TIME_MINUTES)));
         return otp;
     }
 
-    public void sendOtp(String username, String otp) {
-        String email = retrieveUserEmail(username); // Assuming a method to fetch user's email
-        String phoneNumber = retrieveUserPhoneNumber(username); // Assuming a method to fetch user's phone number
+    public void sendOtp(String phone, String otp) {
+        String email = retrieveUserEmail(phone); // Assuming a method to fetch user's email
+        String phoneNumber = retrieveUserPhoneNumber(phone); // Assuming a method to fetch user's phone number
 
         // Choose appropriate delivery method(s) based on available contact information:
         if (email != null) {
@@ -41,12 +41,12 @@ public class OtpService {
         }
     }
 
-    private String retrieveUserPhoneNumber(String username) {
+    private String retrieveUserPhoneNumber(String phone) {
         return "9988776655";
     }
 
-    private String retrieveUserEmail(String username) {
-        return "username@ps.com";
+    private String retrieveUserEmail(String phone) {
+        return "user@ps.com";
     }
 
 // Methods for specific delivery methods:
@@ -63,19 +63,19 @@ public class OtpService {
         System.out.println("Sending OTP via SMS to: " + phoneNumber + ", OTP: " + otp);
     }
 
-    public boolean validateOtp(String username, String otp) {
-        OtpDetails otpDetails = otpMap.get(username);
+    public boolean validateOtp(String phone, String otp) {
+        OtpDetails otpDetails = otpMap.get(phone);
         if (otpDetails == null || !otpDetails.getOtp().equals(otp)) {
             return false; // Invalid OTP
         }
 
         // Check expiry
         if (otpDetails.getExpiryTime().isBefore(LocalDateTime.now())) {
-            otpMap.remove(username);
+            otpMap.remove(phone);
             return false; // OTP expired
         }
 
-        otpMap.remove(username); // OTP validated, remove it
+        otpMap.remove(phone); // OTP validated, remove it
         return true;
     }
 

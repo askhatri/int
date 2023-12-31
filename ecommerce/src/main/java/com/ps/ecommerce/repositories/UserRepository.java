@@ -4,9 +4,9 @@ import com.ps.ecommerce.entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface UserRepository extends JpaRepository<User, Long> {
-    User findByUsername(String username);
+    User findByPhone(String phone);
 
-    User findOneByUsername(String username);
+    User findOneByPhone(String phone);
 
-    boolean existsByUsername(String username);
+    boolean existsByPhone(String phone);
 }

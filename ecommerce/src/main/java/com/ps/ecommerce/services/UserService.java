@@ -25,32 +25,32 @@ public class UserService implements UserDetailsService {
         this.userRepository = userRepository;
     }
 
-    public User getUserByUsername(String username) {
-        return userRepository.findOneByUsername(username);
+    public User getUserByPhone(String phone) {
+        return userRepository.findOneByPhone(phone);
     }
 
-    public boolean isUserExistByUsername(String username) {
-        return userRepository.existsByUsername(username);
+    public boolean isUserExistByPhone(String phone) {
+        return userRepository.existsByPhone(phone);
     }
 
     @Override
     @Transactional
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = getUserByUsername(username);
+    public UserDetails loadUserByUsername(String phone) throws UsernameNotFoundException {
+        User user = getUserByPhone(phone);
         if (user == null) {
             throw new UsernameNotFoundException("Invalid login or password");
         }
-        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), mapRolesToAuthorities());
+        return new org.springframework.security.core.userdetails.User(user.getPhone(), user.getPassword(), mapRolesToAuthorities());
     }
 
     private Collection<? extends GrantedAuthority> mapRolesToAuthorities() {
         Set<GrantedAuthority> mappedAuthorities = new HashSet<>();
-        mappedAuthorities.add(new SimpleGrantedAuthority("USER"));
-        mappedAuthorities.add(new SimpleGrantedAuthority("ADMIN"));
-        mappedAuthorities.add(new SimpleGrantedAuthority("MANAGER"));
-        mappedAuthorities.add(new SimpleGrantedAuthority("ROLE_USER"));
-        mappedAuthorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
-        mappedAuthorities.add(new SimpleGrantedAuthority("ROLE_MANAGER"));
+//        mappedAuthorities.add(new SimpleGrantedAuthority("USER"));
+//        mappedAuthorities.add(new SimpleGrantedAuthority("ADMIN"));
+//        mappedAuthorities.add(new SimpleGrantedAuthority("MANAGER"));
+//        mappedAuthorities.add(new SimpleGrantedAuthority("ROLE_USER"));
+//        mappedAuthorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
+//        mappedAuthorities.add(new SimpleGrantedAuthority("ROLE_MANAGER"));
         return mappedAuthorities;
     }
 }
