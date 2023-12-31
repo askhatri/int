@@ -4,15 +4,11 @@
 <head>
     <meta charset="utf-8"/>
     <title>ecommerce</title>
-    <link rel="stylesheet" th:href="@{../static/css/stylesheet.css}">
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 </head>
 
 <body>
 
-<div class="container">
+<div>
     <div th:replace="~{navigation :: navigation(Profile)}"/>
 
     <h1>Профиль</h1>
@@ -21,8 +17,8 @@
     <h5 th:text="'Phone: ' + ${user.phone}"/>
 
     <h3>Your orders</h3>
-    <table class="table table-hover">
-        <thead class="thead-dark">
+    <table>
+        <thead>
         <tr>
             <th>Order</th>
             <th>Price</th>
@@ -34,7 +30,7 @@
             <td th:text="${order.id}">
             <td th:text="${order.price}">
             <td>
-                <a class="btn btn-primary" th:href="@{/profile/orders/{orderId}(orderId=${order.id})}">Show details</a>
+                <a th:href="@{/profile/orders/{orderId}(orderId=${order.id})}">Show details</a>
             </td>
         </tr>
         </tbody>
