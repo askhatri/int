@@ -13,10 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.security.Principal;
@@ -60,29 +58,27 @@ public class MainController {
         return "login_success";
     }
 
-    @GetMapping("/register")
-    public String register() {
-        logger.info("On register GetMapping Page");
-        return "register";
-    }
-
     @PostMapping("/register")
-    public String registerPost(Model model, Principal principal) {
-        String phone = model.getAttribute("phone").toString();
-        logger.info("On register phone: " + phone);
-        User user = userService.getUserByPhone(phone);
-        if(user != null) {
-            logger.info("On register user already exists.");
-            model.addAttribute("error", "User already exists.");
+    public String registerUser(@ModelAttribute("user") User user, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
             return "register";
         }
-        String password = model.getAttribute("password").toString();
-        user = new User();
-        user.setPassword(password);
-        user.setPhone(phone);
-        userService.saveUser(user);
-        logger.info("On register PostMapping Page");
+        if (userService.getUserByPhone(user.getPhone()) != null) {
+            bindingResult.rejectValue("phone", "error.userExists", "User with this phone already exists");
+            return "register";
+        }
+        userService.createUser(user);
         return "register_success";
+    }
+
+    @GetMapping("/register")
+    public String showRegistrationForm(Model model) {
+        logger.info("On register Page");
+        User user = new User();
+        user.setPhone("9988776655");
+        user.setPassword("9988776655");
+        model.addAttribute("user", user);
+        return "register";
     }
 
     @GetMapping("/home")

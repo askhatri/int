@@ -53,7 +53,7 @@ public class UserService implements UserDetailsService {
         return mappedAuthorities;
     }
 
-    public void saveUser(User user) {
+    public void createUser(User user) {
         userRepository.save(user);
     }
 }

@@ -1,51 +1,26 @@
 <!DOCTYPE html>
-
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Registration Page</title>
-    <meta charset="utf-8">
-    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
-
-    <link rel="icon" th:href="@{/favicon.ico}" type="image/png"/>
+    <title>Registration</title>
+    <meta charset="UTF-8">
 </head>
-
 <body>
-Registration Page
-<hr>
+<h1>Register</h1>
 
-<form method="POST" th:action="@{/register}">
-    <div th:if="${param.error} != null">
-        <div>
-            Invalid phone and password
-        </div>
+<form method="post" th:action="@{/register}" th:object="${user}">
+    <div>
+        <label for="phone">Phone:</label>
+        <input id="phone" name="phone" required th:field="*{phone}" type="text">
+        <span th:errors="*{phone}" th:if="${#fields.hasErrors('phone')}"></span>
     </div>
-    <table>
-        <tr>
-            <td>
-                Phone:
-            </td>
-            <td>
-                <input name="phone" placeholder="phone" type="text" value="9988776655">
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Password:
-            </td>
-            <td>
-                <input name="password" placeholder="password" type="password" value="9988776655">
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Submit
-            </td>
-            <td>
-                <button type="submit">Register</button>
-            </td>
-        </tr>
-    </table>
+
+    <div>
+        <label for="password">Password:</label>
+        <input id="password" name="password" required th:field="*{password}" type="password">
+        <span th:errors="*{password}" th:if="${#fields.hasErrors('password')}"></span>
+    </div>
+
+    <button type="submit">Register</button>
 </form>
 </body>
 </html>

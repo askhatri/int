@@ -17,6 +17,11 @@ public class User {
     public User() {
     }
 
+    public User(String phone, String password) {
+        this.phone = phone;
+        this.password = password;
+    }
+
     public User(Long id, String phone) {
         this.id = id;
         this.phone = phone;
