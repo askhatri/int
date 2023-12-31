@@ -16,34 +16,34 @@
                     <a th:href="@{/}">Main</a>
                 </li>
                 <l sec:authorize="isAuthenticated()"
-                    th:classappend="${activeTab == 'Profile' ? 'active' : ''}">
+                   th:classappend="${activeTab == 'Profile' ? 'active' : ''}">
                     <a th:href="@{/profile}">Profile</a>
-                </li>
-                <li th:classappend="${activeTab == 'Cart' ? 'active' : ''}">
-                    <a th:href="@{/cart}">Cart</a>
-                </li>
+                    </li>
+                    <li th:classappend="${activeTab == 'Cart' ? 'active' : ''}">
+                        <a th:href="@{/cart}">Cart</a>
+                    </li>
 
-                <li sec:authorize="isAuthenticated()">
-                    <form method="POST" th:action="@{/logout}">
-                        <button id="navLogout" type="submit">Log Out</button>
-                    </form>
-                </li>
+                    <li sec:authorize="isAuthenticated()">
+                        <form method="POST" th:action="@{/logout}">
+                            <button id="navLogout" type="submit">Log Out</button>
+                        </form>
+                    </li>
 
-                <li sec:authorize="isAnonymous()">
-                    <form method="POST" th:action="@{/authenticateUser}">
-                        <div>
-                            <input aria-describedby="inputGroup-sizing-sm" id="navLoginField" name="username"
-                                   placeholder="Phone"
-                                   style="margin-left: 10px;" type="text">
-                            <input aria-describedby="inputGroup-sizing-sm" id="navPasswordField" name="password"
-                                   placeholder="Password"
-                                   style="margin-left: 10px;" type="password">
-                            <button id="navLoginSubmit"
-                                    style="margin-left: 10px;" type="submit">Log In
-                            </button>
-                        </div>
-                    </form>
-                </li>
+                    <li sec:authorize="isAnonymous()">
+                        <form method="POST" th:action="@{/authenticateUser}">
+                            <div>
+                                <input aria-describedby="inputGroup-sizing-sm" id="navLoginField" name="username"
+                                       placeholder="Phone"
+                                       style="margin-left: 10px;" type="text">
+                                <input aria-describedby="inputGroup-sizing-sm" id="navPasswordField" name="password"
+                                       placeholder="Password"
+                                       style="margin-left: 10px;" type="password">
+                                <button id="navLoginSubmit"
+                                        style="margin-left: 10px;" type="submit">Log In
+                                </button>
+                            </div>
+                        </form>
+                    </li>
             </ul>
         </div>
     </nav>
