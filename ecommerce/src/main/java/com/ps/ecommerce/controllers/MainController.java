@@ -9,7 +9,6 @@ import com.ps.ecommerce.services.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -19,48 +18,40 @@ import org.springframework.security.web.authentication.logout.SecurityContextLog
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 public class MainController {
     private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(MainController.class);
 
     private final ProductService productService;
-    private final CategoryService categoryService;
+
     private final UserService userService;
     private final OrderService orderService;
     private final OrderItemService orderItemService;
     private final OtpService otpService;
     private final Cart cart;
 
-    private AuthenticationManager authenticationManager;
+    private final AuthenticationManager authenticationManager;
 
     @Autowired
-    public MainController(ProductService productService, CategoryService categoryService, UserService userService, OrderService orderService, OrderItemService orderItemService, Cart cart,
+    public MainController(ProductService productService, UserService userService, OrderService orderService, OrderItemService orderItemService, Cart cart,
                           OtpService otpService, AuthenticationManager authenticationManager) {
         this.productService = productService;
-        this.categoryService = categoryService;
         this.userService = userService;
         this.orderService = orderService;
         this.orderItemService = orderItemService;
         this.otpService = otpService;
         this.authenticationManager = authenticationManager;
         this.cart = cart;
-    }
-
-    @GetMapping("/afsdasf")
-    public String afasfd(Model model, @RequestParam Map<String, String> param) {
-        Page<Product> page = productService.findAll(param);
-        StringBuilder requestDefinition = productService.getRequestDefinition();
-        model.addAttribute("page", page);
-        model.addAttribute("requestDefinition", requestDefinition);
-        return "afsdfa";
     }
 
     @GetMapping("/")

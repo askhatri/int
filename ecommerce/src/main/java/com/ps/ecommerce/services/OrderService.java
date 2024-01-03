@@ -10,12 +10,9 @@ import java.util.List;
 
 @Service
 public class OrderService {
-    private OrderRepository orderRepository;
 
     @Autowired
-    public void setOrderRepository(OrderRepository orderRepository) {
-        this.orderRepository = orderRepository;
-    }
+    private OrderRepository orderRepository;
 
     public OrderDetails save(OrderDetails order) {
         return orderRepository.save(order);

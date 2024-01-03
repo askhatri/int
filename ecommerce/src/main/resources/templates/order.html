@@ -7,10 +7,10 @@
 </head>
 <body>
 <div>
-    <div th:replace="~{navigation :: navigation(Cart)}"/>
+    <div th:replace="~{navigation :: navigation(Cart)}"></div>
 
     <h1>Cart</h1>
-    <span th:text="'Order #' + ${order.getId()}"/>
+    <span th:text="'Order #' + ${order.getId()}"></span>
     <table>
         <thead>
         <tr>
@@ -27,8 +27,9 @@
         </tr>
         </tbody>
     </table>
-    <span th:text="'Total price: ' + ${order.price}"/>
+    <span th:text="'Total price: ' + ${order.price}"></span>
     <br>
     <a th:href="@{/profile}">back</a>
+</div>
 </body>
 </html>

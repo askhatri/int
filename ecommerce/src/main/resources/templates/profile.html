@@ -9,12 +9,12 @@
 <body>
 
 <div>
-    <div th:replace="~{navigation :: navigation(Profile)}"/>
+    <div th:replace="~{navigation :: navigation(Profile)}"></div>
 
     <h1>Профиль</h1>
 
-    <h5 th:text="'Name: ' + ${user.firstName} + ' ' + ${user.lastName}"/>
-    <h5 th:text="'Phone: ' + ${user.phone}"/>
+    <h5 th:text="'Name: ' + ${user.firstName} + ' ' + ${user.lastName}"></h5>
+    <h5 th:text="'Phone: ' + ${user.phone}"></h5>
 
     <h3>Your orders</h3>
     <table>

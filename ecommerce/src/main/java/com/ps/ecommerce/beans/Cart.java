@@ -21,7 +21,6 @@ public class Cart {
 
     @ElementCollection
     private List<OrderItem> items;
-    private BigDecimal price;
 
     @PostConstruct
     public void init() {
@@ -35,7 +34,7 @@ public class Cart {
 
     public void addToCart(Product product) {
         for (OrderItem i : items) {
-            if (i.getProduct().getId() == product.getId()) {
+            if (i.getProduct().getId().equals(product.getId())) {
                 i.setQuantity(i.getQuantity() + 1);
                 i.setPrice(i.getPrice().multiply(new BigDecimal(i.getQuantity())));
                 recalculateTotalPrice();
@@ -57,9 +56,9 @@ public class Cart {
     }
 
     public void recalculateTotalPrice() {
-        this.price = new BigDecimal(0);
+        BigDecimal price = new BigDecimal(0);
         for (OrderItem i : items) {
-            price.add(i.getPrice());
+            price = price.add(i.getPrice());
         }
     }
 

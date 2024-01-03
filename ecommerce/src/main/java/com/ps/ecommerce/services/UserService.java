@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.Set;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -43,14 +42,7 @@ public class UserService implements UserDetailsService {
     }
 
     private Collection<? extends GrantedAuthority> mapRolesToAuthorities() {
-        Set<GrantedAuthority> mappedAuthorities = new HashSet<>();
-//        mappedAuthorities.add(new SimpleGrantedAuthority("USER"));
-//        mappedAuthorities.add(new SimpleGrantedAuthority("ADMIN"));
-//        mappedAuthorities.add(new SimpleGrantedAuthority("MANAGER"));
-//        mappedAuthorities.add(new SimpleGrantedAuthority("ROLE_USER"));
-//        mappedAuthorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
-//        mappedAuthorities.add(new SimpleGrantedAuthority("ROLE_MANAGER"));
-        return mappedAuthorities;
+        return new HashSet<>();
     }
 
     public void saveUser(User user) {
