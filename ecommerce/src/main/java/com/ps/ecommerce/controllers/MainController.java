@@ -31,15 +31,12 @@ import java.util.List;
 @Controller
 public class MainController {
     private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(MainController.class);
-
     private final ProductService productService;
-
     private final UserService userService;
     private final OrderService orderService;
     private final OrderItemService orderItemService;
     private final OtpService otpService;
     private final Cart cart;
-
     private final AuthenticationManager authenticationManager;
 
     @Autowired
@@ -89,6 +86,7 @@ public class MainController {
         String generatedOtp = otpService.generateOtp(user.getPhone());
         logger.info("Generated OTP: " + generatedOtp);
         user.setOtp(generatedOtp);
+        otpService.sendOtp(user.getPhone());
         userService.saveUser(user);
         return "register_page2";
     }
@@ -116,7 +114,7 @@ public class MainController {
         user.setPhone("9988776655");
         user.setPassword("9988776655");
         model.addAttribute("user", user);
-        return "register";
+        return "register_page1";
     }
 
     @GetMapping("/home")
