@@ -84,10 +84,10 @@ public class MainController {
             return "register_page1";
         }
         String generatedOtp = otpService.generateOtp(user.getPhone());
-        logger.info("Generated OTP: " + generatedOtp);
         user.setOtp(generatedOtp);
-        otpService.sendOtp(user.getPhone());
         userService.saveUser(user);
+        otpService.sendOtp(user.getPhone());
+        user.setOtp(null);
         return "register_page2";
     }
 
@@ -102,8 +102,8 @@ public class MainController {
             bindingResult.rejectValue("otp", "error.userExists", "OTP does not match");
             return "register_page2";
         }
-        user.setActive(true);
-        userService.saveUser(user);
+        exisitingUser.setActive(true);
+        userService.saveUser(exisitingUser);
         return "register_page3";
     }
 
