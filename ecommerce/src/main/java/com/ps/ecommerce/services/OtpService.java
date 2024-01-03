@@ -1,108 +1,47 @@
 package com.ps.ecommerce.services;
 
+import com.ps.ecommerce.entities.User;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Random;
+import java.util.logging.Logger;
 
 @Service
 public class OtpService {
 
-    private static final int OTP_LENGTH = 6; // Number of digits in the OTP
-    private static final int OTP_EXPIRY_TIME_MINUTES = 5; // OTP validity duration
-
+    static final Logger logger = (Logger) LoggerFactory.getLogger(OtpService.class);
+    private static final int OTP_LENGTH = 6;
+    private static final int OTP_EXPIRY_TIME_MINUTES = 5;
     private final Random random = new Random();
-    private final Map<String, OtpDetails> otpMap = new HashMap<>(); // Stores OTPs with expiry
+    @Autowired
+    UserService userService;
 
     public String generateOtp(String phone) {
-        String otp = generateRandomNumberString(OTP_LENGTH);
-        otpMap.put(phone, new OtpDetails(otp, LocalDateTime.now().plusMinutes(OTP_EXPIRY_TIME_MINUTES)));
-        return otp;
+        return generateRandomNumberString();
     }
 
-    public void sendOtp(String phone, String otp) {
-        String email = retrieveUserEmail(phone); // Assuming a method to fetch user's email
-        String phoneNumber = retrieveUserPhoneNumber(phone); // Assuming a method to fetch user's phone number
+    public void sendOtp(String phone) {
+        User user = userService.getUserByPhone(phone);
 
-        // Choose appropriate delivery method(s) based on available contact information:
-        if (email != null) {
-            sendOtpViaEmail(email, otp);
+        if (user.getPhone() != null && user.getOtp() != null) {
+            sendOtpViaSms(user.getPhone(), user.getOtp());
+            return;
         }
 
-        if (phoneNumber != null) {
-            sendOtpViaSms(phoneNumber, otp);
-        }
-
-        // If no contact information is available, handle the error gracefully:
-        if (email == null && phoneNumber == null) {
-            throw new IllegalStateException("No contact information found for user");
-        }
-    }
-
-    private String retrieveUserPhoneNumber(String phone) {
-        return "9988776655";
-    }
-
-    private String retrieveUserEmail(String phone) {
-        return "user@ps.com";
-    }
-
-// Methods for specific delivery methods:
-
-    private void sendOtpViaEmail(String email, String otp) {
-        // Use an email library or service to send the OTP to the specified email address
-        // Example using a placeholder:
-        System.out.println("Sending OTP via email to: " + email + ", OTP: " + otp);
+        throw new IllegalStateException("No contact information found for user");
     }
 
     private void sendOtpViaSms(String phoneNumber, String otp) {
-        // Use an SMS gateway or service to send the OTP to the specified phone number
-        // Example using a placeholder:
-        System.out.println("Sending OTP via SMS to: " + phoneNumber + ", OTP: " + otp);
+        logger.info("Sending OTP via SMS to: " + phoneNumber + ", OTP: " + otp);
     }
 
-    public boolean validateOtp(String phone, String otp) {
-        OtpDetails otpDetails = otpMap.get(phone);
-        if (otpDetails == null || !otpDetails.getOtp().equals(otp)) {
-            return false; // Invalid OTP
-        }
-
-        // Check expiry
-        if (otpDetails.getExpiryTime().isBefore(LocalDateTime.now())) {
-            otpMap.remove(phone);
-            return false; // OTP expired
-        }
-
-        otpMap.remove(phone); // OTP validated, remove it
-        return true;
-    }
-
-    private String generateRandomNumberString(int length) {
+    private String generateRandomNumberString() {
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < length; i++) {
+        for (int i = 0; i < OtpService.OTP_LENGTH; i++) {
             sb.append(random.nextInt(10));
         }
         return sb.toString();
-    }
-
-    // Helper class to store OTP and expiry details
-    private static class OtpDetails {
-        private final String otp;
-        private final LocalDateTime expiryTime;
-
-        public OtpDetails(String otp, LocalDateTime expiryTime) {
-            this.otp = otp;
-            this.expiryTime = expiryTime;
-        }
-
-        public String getOtp() {
-            return otp;
-        }
-
-        public LocalDateTime getExpiryTime() {
-            return expiryTime;
-        }
     }
 }
